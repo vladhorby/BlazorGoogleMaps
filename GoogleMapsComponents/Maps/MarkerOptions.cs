@@ -44,12 +44,12 @@ namespace GoogleMapsComponents.Maps
         /// Icon for the foreground. 
         /// If a string is provided, it is treated as though it were an Icon with the string as url.
         /// </summary>
-        public object Icon { get; set; }
+        public Icon Icon { get; set; }
 
         /// <summary>
         /// Adds a label to the marker. The label can either be a string, or a MarkerLabel object.
         /// </summary>
-        public object Label { get; set; }
+        public MarkerLabel Label { get; set; }
 
         /// <summary>
         /// Map on which to display Marker.

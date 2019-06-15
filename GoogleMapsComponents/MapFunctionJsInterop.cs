@@ -19,7 +19,7 @@ namespace GoogleMapsComponents
 
         public Task Init(string id, MapOptions options)
         {
-            return _jsRuntime.MyInvokeAsync<bool>(
+            return _jsRuntime.JsonNetInvokeAsync<bool>(
                 "googleMapJsFunctions.init",
                 id,
                 options);
@@ -34,7 +34,7 @@ namespace GoogleMapsComponents
 
         public Task FitBounds(string id, LatLngBoundsLiteral bounds)
         {
-            return _jsRuntime.MyInvokeAsync<bool>(
+            return _jsRuntime.JsonNetInvokeAsync<bool>(
                 "googleMapJsFunctions.fitBounds",
                 id,
                 bounds);
@@ -42,7 +42,7 @@ namespace GoogleMapsComponents
 
         public Task PanBy(string id, int x, int y)
         {
-            return _jsRuntime.MyInvokeAsync<bool>(
+            return _jsRuntime.JsonNetInvokeAsync<bool>(
                 "googleMapJsFunctions.panBy",
                 id,
                 x,
@@ -51,7 +51,7 @@ namespace GoogleMapsComponents
 
         public Task PanTo(string id, LatLngLiteral latLng)
         {
-            return _jsRuntime.MyInvokeAsync<bool>(
+            return _jsRuntime.JsonNetInvokeAsync<bool>(
                 "googleMapJsFunctions.panTo",
                 id,
                 latLng);
@@ -59,7 +59,7 @@ namespace GoogleMapsComponents
 
         public Task PanToBounds(string id, LatLngBoundsLiteral latLngBounds)
         {
-            return _jsRuntime.MyInvokeAsync<bool>(
+            return _jsRuntime.JsonNetInvokeAsync<bool>(
                 "googleMapJsFunctions.panToBounds",
                 id,
                 latLngBounds);
@@ -67,21 +67,21 @@ namespace GoogleMapsComponents
 
         public Task<LatLngBoundsLiteral> GetBounds(string id)
         {
-            return _jsRuntime.MyInvokeAsync<LatLngBoundsLiteral>(
+            return _jsRuntime.JsonNetInvokeAsync<LatLngBoundsLiteral>(
                 "googleMapJsFunctions.getBounds",
                 id);
         }
 
         public Task<LatLngLiteral> GetCenter(string id)
         {
-            return _jsRuntime.MyInvokeAsync<LatLngLiteral>(
+            return _jsRuntime.JsonNetInvokeAsync<LatLngLiteral>(
                 "googleMapJsFunctions.getCenter",
                 id);
         }
 
         public Task SetCenter(string id, LatLngLiteral latLng)
         {
-            return _jsRuntime.MyInvokeAsync<bool>(
+            return _jsRuntime.JsonNetInvokeAsync<bool>(
                 "googleMapJsFunctions.setCenter",
                 id,
                 latLng);
@@ -89,14 +89,14 @@ namespace GoogleMapsComponents
 
         public Task<bool> GetClickableIcons(string id)
         {
-            return _jsRuntime.MyInvokeAsync<bool>(
+            return _jsRuntime.JsonNetInvokeAsync<bool>(
                 "googleMapJsFunctions.getClickableIcons",
                 id);
         }
 
         public Task SetClickableIcons(string id, bool value)
         {
-            return _jsRuntime.MyInvokeAsync<bool>(
+            return _jsRuntime.JsonNetInvokeAsync<bool>(
                 "googleMapJsFunctions.setClickableIcons",
                 id,
                 value);
@@ -104,14 +104,14 @@ namespace GoogleMapsComponents
 
         public Task<int> GetHeading(string id)
         {
-            return _jsRuntime.MyInvokeAsync<int>(
+            return _jsRuntime.JsonNetInvokeAsync<int>(
                 "googleMapJsFunctions.getHeading",
                 id);
         }
 
         public Task SetHeading(string id, int heading)
         {
-            return _jsRuntime.MyInvokeAsync<int>(
+            return _jsRuntime.JsonNetInvokeAsync<int>(
                 "googleMapJsFunctions.setHeading",
                 id,
                 heading);
@@ -119,7 +119,7 @@ namespace GoogleMapsComponents
 
         public async Task<MapTypeId> GetMapTypeId(string id)
         {
-            var str = await _jsRuntime.MyInvokeAsync<string>(
+            var str = await _jsRuntime.JsonNetInvokeAsync<string>(
                 "googleMapJsFunctions.getMapTypeId",
                 id);
 
@@ -130,7 +130,7 @@ namespace GoogleMapsComponents
 
         public Task SetMapTypeId(string id, MapTypeId mapTypeId)
         {
-            return _jsRuntime.MyInvokeAsync<int>(
+            return _jsRuntime.JsonNetInvokeAsync<int>(
                 "googleMapJsFunctions.setMapTypeId",
                 id,
                 mapTypeId);
@@ -138,14 +138,14 @@ namespace GoogleMapsComponents
         
         public Task<int> GetTilt(string id)
         {
-            return _jsRuntime.MyInvokeAsync<int>(
+            return _jsRuntime.JsonNetInvokeAsync<int>(
                 "googleMapJsFunctions.getTilt",
                 id);
         }
 
         public Task SetTilt(string id, int tilt)
         {
-            return _jsRuntime.MyInvokeAsync<bool>(
+            return _jsRuntime.JsonNetInvokeAsync<bool>(
                 "googleMapJsFunctions.setTilt",
                 id,
                 tilt);
@@ -153,14 +153,14 @@ namespace GoogleMapsComponents
 
         public Task<int> GetZoom(string id)
         {
-            return _jsRuntime.MyInvokeAsync<int>(
+            return _jsRuntime.JsonNetInvokeAsync<int>(
                 "googleMapJsFunctions.getZoom",
                 id);
         }
 
         public Task SetZoom(string id, int zoom)
         {
-            return _jsRuntime.MyInvokeAsync<bool>(
+            return _jsRuntime.JsonNetInvokeAsync<bool>(
                 "googleMapJsFunctions.setZoom",
                 id,
                 zoom);

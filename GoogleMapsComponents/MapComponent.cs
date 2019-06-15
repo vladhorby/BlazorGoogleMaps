@@ -23,7 +23,7 @@ namespace GoogleMapsComponents
         public IJSRuntime JsRuntime { get; protected set; }
 
         [Inject]
-        public MapFunctionJsInterop JsFuntionInterop { get; protected set; }
+        public MapFunctionJsInterop JsFunctionInterop { get; protected set; }
 
         [Inject]
         public MapEventJsInterop JsEventInterop { get; protected set; }
@@ -32,7 +32,7 @@ namespace GoogleMapsComponents
         {
             DivId = id;
 
-            await JsFuntionInterop.Init(id, options);
+            await JsFunctionInterop.Init(id, options);
 
             MapComponentInstances.Add(id, this);
         }
@@ -49,7 +49,7 @@ namespace GoogleMapsComponents
                                 ContractResolver = new CamelCasePropertyNamesContractResolver()
                             });
 
-            await JsRuntime.MyInvokeAsync<bool>(
+            await JsRuntime.JsonNetInvokeAsync<bool>(
                 "googleMapJsFunctions.init",
                 DivId,
                 element,
@@ -61,7 +61,7 @@ namespace GoogleMapsComponents
         public void Dispose()
         {
             ClearListeners();
-            JsFuntionInterop.Dispose(DivId);
+            JsFunctionInterop.Dispose(DivId);
             MapComponentInstances.Remove(DivId);
         }
 

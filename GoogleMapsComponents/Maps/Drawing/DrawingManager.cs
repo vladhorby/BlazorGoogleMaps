@@ -24,7 +24,7 @@ namespace GoogleMapsComponents.Maps.Drawing
             if (opt?.Map != null)
                 _map = opt.Map;
 
-            _jsRuntime.MyInvokeAsync<bool>(
+            _jsRuntime.JsonNetInvokeAsync<bool>(
                 "googleMapDrawingManagerJsFunctions.init",
                 _guid,
                 opt);
@@ -81,7 +81,7 @@ namespace GoogleMapsComponents.Maps.Drawing
         /// <param name="map"></param>
         public async Task SetMap(MapComponent map)
         {
-            await _jsRuntime.MyInvokeAsync<bool>(
+            await _jsRuntime.JsonNetInvokeAsync<bool>(
                    "googleMapDrawingManagerJsFunctions.setMap",
                    _guid,
                    map?.DivId);

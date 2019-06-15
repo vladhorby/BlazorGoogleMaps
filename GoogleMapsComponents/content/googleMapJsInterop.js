@@ -5,7 +5,7 @@ window.googleMapJsFunctions = {
         let id = args[0];
         let mapOptions = args[1];
 
-        //console.log("init google map " + id + " with options : ");
+        console.log("init google map " + id + " with options : ");
         //console.dir(mapOptions);
 
         window._blazorGoogleMaps = window._blazorGoogleMaps || [];
@@ -41,7 +41,7 @@ window.googleMapJsFunctions = {
         let args = JSON.parse(jsonArgs);
         let map = window._blazorGoogleMaps[guid];
 
-        //console.log("Invoke " + methodName);
+        console.log("Invoke " + methodName);
         //console.dir(args);
 
         if (typeof args === 'undefined') {

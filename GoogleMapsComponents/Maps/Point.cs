@@ -10,11 +10,11 @@ namespace GoogleMapsComponents.Maps
         /// <summary>
         /// The X coordinate
         /// </summary>
-        public double X { get; set; }
+        public double? X { get; set; }
 
         /// <summary>
         /// The Y coordinate
         /// </summary>
-        public double Y { get; set; }
+        public double? Y { get; set; }
     }
 }

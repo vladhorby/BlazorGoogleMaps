@@ -1,106 +1,161 @@
 ﻿
 window.googleMapEventJsFunctions = {
-    addMapEvent: function (guid, mapId, eventFunctionName, eventName) {
-        console.log("Add event for map : " + mapId + ", event : " + guid + ", " + eventName);
+	addMapEvent: function (guid, mapId, eventFunctionName, eventName) {
+		console.log("Add event for map : " + mapId + ", event : " + guid + ", " + eventName);
 
-        if (window._blazorGoogleMaps === null || window._blazorGoogleMaps === 'undefined') {
-            console.error("maps collection is not initialize.");
-            return false;
-        }
+		if (window._blazorGoogleMaps === null || window._blazorGoogleMaps === 'undefined') {
+			console.error("maps collection is not initialize.");
+			return false;
+		}
 
-        window._blazorMapEvents = window._blazorMapEvents || [];
+		window._blazorMapEvents = window._blazorMapEvents || [];
 
-        window._blazorMapEvents[guid] = window._blazorGoogleMaps[mapId][eventFunctionName](eventName, async function (args) {
-            //console.log("Event " + eventName + " fired.");
-            //console.dir(args);
+		window._blazorMapEvents[guid] = window._blazorGoogleMaps[mapId][eventFunctionName](eventName, async function (args) {
+			//console.log("Event " + eventName + " fired.");
+			//console.dir(args);
 
-            let timestamp = + new Date();
-            let eventArgsId = guid + "_" + timestamp;
+			let timestamp = + new Date();
+			let eventArgsId = guid + "_" + timestamp;
 
-            window._blazorMapEventArgs = window._blazorMapEventArgs || [];
+			window._blazorMapEventArgs = window._blazorMapEventArgs || [];
 
-            if (args !== null && typeof args !== 'undefined') {
-                args["id"] = eventArgsId;
-                window._blazorMapEventArgs[eventArgsId] = args;
-            }
+			if (args !== null && typeof args !== 'undefined') {
+				args["id"] = eventArgsId;
+				window._blazorMapEventArgs[eventArgsId] = args;
+			}
 
-            let jsonString = JSON.stringify(args);
+			let jsonString = JSON.stringify(args);
 
-            await DotNet.invokeMethodAsync('GoogleMapsComponents', 'NotifyMapEvent', guid, jsonString)
-                .then(_ => {
-                    //console.log("Remove event args : " + eventArgsId);
-                    delete window._blazorMapEventArgs[eventArgsId];
-                });
-        });
+			await DotNet.invokeMethodAsync('GoogleMapsComponents', 'NotifyMapEvent', guid, jsonString)
+				.then(_ => {
+					//console.log("Remove event args : " + eventArgsId);
+					delete window._blazorMapEventArgs[eventArgsId];
+				});
+		});
 
-        return true;
-    },
+		return true;
+	},
 
-    addListener: function (guid, mapId, eventName) {
-        return window.googleMapEventJsFunctions.addMapEvent(guid, mapId, "addListener", eventName);
-    },
+	addListener: function (guid, mapId, eventName) {
+		return window.googleMapEventJsFunctions.addMapEvent(guid, mapId, "addListener", eventName);
+	},
 
-    addListenerOnce: function (guid, mapId, eventName) {
-        return window.googleMapEventJsFunctions.addMapEvent(guid, mapId, "addListenerOnce", eventName);
-    },
+	addListenerOnce: function (guid, mapId, eventName) {
+		return window.googleMapEventJsFunctions.addMapEvent(guid, mapId, "addListenerOnce", eventName);
+	},
 
-    removeListener: function (guid) {
-        var eventRef = window._blazorMapEvents[guid];
-        eventRef.remove();
-    },
+	removeListener: function (guid) {
+		var eventRef = window._blazorMapEvents[guid];
+		eventRef.remove();
+	},
 
-    clearListeners: function (divId, eventName) {
-        window._blazorGoogleMaps[divId].clearListeners(eventName);
-    },
+	clearListeners: function (divId, eventName) {
+		window._blazorGoogleMaps[divId].clearListeners(eventName);
+	},
 
-    clearInstanceListeners: function (divId) {
-        window._blazorGoogleMaps[divId].clearInstanceListeners();
-    },
+	clearInstanceListeners: function (divId) {
+		window._blazorGoogleMaps[divId].clearInstanceListeners();
+	},
 
-    addMarkerListener: function (eventGuid, markerGuid, eventName) {
-        console.log("Add listener for marker : " + markerGuid + ", event : " + eventGuid + ", " + eventName);
+	addMarkerListener: function (eventGuid, markerGuid, eventName) {
+		console.log("Add listener for marker : " + markerGuid + ", event : " + eventGuid + ", " + eventName);
 
-        if (window._blazorGoogleMapsMarkers === null || window._blazorGoogleMapsMarkers === 'undefined') {
-            console.log("markers collection is not initialize.");
-            return false;
-        }
+		if (window._blazorGoogleMapsMarkers === null || window._blazorGoogleMapsMarkers === 'undefined') {
+			console.log("markers collection is not initialize.");
+			return false;
+		}
 
-        window._blazorMapEvents = window._blazorMapEvents || [];
+		window._blazorMapEvents = window._blazorMapEvents || [];
 
-        window._blazorMapEvents[eventGuid] = window._blazorGoogleMapsMarkers[markerGuid].addListener(eventName, async function (args) {
-            //console.log("Event " + eventName + " fired.");
+		window._blazorMapEvents[eventGuid] = window._blazorGoogleMapsMarkers[markerGuid].addListener(eventName, async function (args) {
+			//console.log("Event " + eventName + " fired.");
 
-            let timestamp = + new Date();
-            let eventArgId = eventGuid + "_" + timestamp;
+			let timestamp = + new Date();
+			let eventArgId = eventGuid + "_" + timestamp;
 
-            window._blazorMapEventArgs = window._blazorMapEventArgs || [];
+			window._blazorMapEventArgs = window._blazorMapEventArgs || [];
 
-            if (args !== null && typeof args !== 'undefined') {
-                console.dir(args);
+			if (args !== null && typeof args !== 'undefined') {
+				console.dir(args);
 
-                args["id"] = eventArgId;
-                window._blazorMapEventArgs[eventArgId] = args;
-            }
+				args["id"] = eventArgId;
+				window._blazorMapEventArgs[eventArgId] = args;
+			}
 
-            let jsonString = JSON.stringify(args);
+			let jsonString = JSON.stringify(args);
 
-            await DotNet.invokeMethodAsync('GoogleMapsComponents', 'NotifyMarkerEvent', eventGuid, jsonString)
-                .then(_ => {
-                    console.log("Remove event args : " + eventArgId);
-                    delete window._blazorMapEventArgs[eventArgId];
-                });
-        });
+			await DotNet.invokeMethodAsync('GoogleMapsComponents', 'NotifyMarkerEvent', eventGuid, jsonString)
+				.then(_ => {
+					console.log("Remove event args : " + eventArgId);
+					delete window._blazorMapEventArgs[eventArgId];
+				});
+		});
 
-        return true;
-    },
+		return true;
+	},
 
-    invokeEventArgsFunction: function (id, functionName) {
-        //console.log("Invoke event function : " + functionName + "for event id : " + id);
-        //console.dir(window._blazorMapEventArgs);
-        //console.dir(window._blazorMapEventArgs[id]);
+	invokeDotNetEventHandler: async function (eventGuid, args) {
+		let timestamp = + new Date();
+		let eventArgId = eventGuid + "_" + timestamp;
 
-        window._blazorMapEventArgs[id][functionName]();
+		window._blazorMapEventArgs = window._blazorMapEventArgs || [];
 
-        return true;
-    }
+		if (args !== null && typeof args !== 'undefined') {
+			console.dir(args);
+
+			args["id"] = eventArgId;
+			window._blazorMapEventArgs[eventArgId] = args;
+		}
+
+		let jsonString = JSON.stringify(args);
+
+		await DotNet.invokeMethodAsync('GoogleMapsComponents', 'NotifyMarkerEvent', eventGuid, jsonString)
+			.then(_ => {
+				console.log("Remove event args : " + eventArgId);
+				delete window._blazorMapEventArgs[eventArgId];
+			});
+	},
+
+	addPolygonListener: function (eventGuid, markerGuid, eventName) {
+		if (window._blazorGoogleMapsMarkers === null || window._blazorGoogleMapsMarkers === 'undefined') {
+			console.log("markers collection is not initialize.");
+			return false;
+		}
+
+		window._blazorMapEvents = window._blazorMapEvents || [];
+		if (eventName !== "edited") {
+			window._blazorMapEvents[eventGuid] = window._blazorGoogleMapsMarkers[markerGuid].addListener(eventName, async function (args) {
+				await googleMapEventJsFunctions.invokeDotNetEventHandler(eventGuid, args);
+			});
+		}
+		else {
+			window._blazorGoogleMapsMarkers[markerGuid].getPaths().forEach(function (path, index) {
+				google.maps.event.addListener(path, 'insert_at', async function (pos) {
+					await googleMapEventJsFunctions.invokeDotNetEventHandler(eventGuid, { pathIndex: index, index: pos, latlng: path.getAt(pos), operation: "insert" });
+				});																																		  
+				google.maps.event.addListener(path, 'remove_at', async function (pos) {	  
+					await googleMapEventJsFunctions.invokeDotNetEventHandler(eventGuid, { pathIndex: index, index: pos, operation: "remove" });
+				});																																		  
+				google.maps.event.addListener(path, 'set_at', async function (pos) {			  
+					await googleMapEventJsFunctions.invokeDotNetEventHandler(eventGuid, { pathIndex: index, index: pos, latlng: path.getAt(pos), operation: "move" });
+				});
+			});
+
+		}
+
+
+		return true;
+	},
+
+
+
+	invokeEventArgsFunction: function (id, functionName) {
+		//console.log("Invoke event function : " + functionName + "for event id : " + id);
+		//console.dir(window._blazorMapEventArgs);
+		//console.dir(window._blazorMapEventArgs[id]);
+
+		window._blazorMapEventArgs[id][functionName]();
+
+		return true;
+	}
 };
